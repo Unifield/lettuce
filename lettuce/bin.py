@@ -53,6 +53,14 @@ def main(args=sys.argv[1:]):
                       '(prefixing tags with "-" will exclude them and '
                       'prefixing with "~" will match approximate words)')
 
+    parser.add_option("-f", "--files",
+                      dest="files",
+                      default=None,
+                      action='append',
+                      help='Tells lettuce to run the specified files only; '
+                      'can be used multiple times to define more files'
+                      'example: -f file1 -f file2 etc')
+
     parser.add_option("-r", "--random",
                       dest="random",
                       action="store_true",
@@ -128,6 +136,7 @@ def main(args=sys.argv[1:]):
         subunit_filename=options.subunit_filename,
         failfast=options.failfast,
         auto_pdb=options.auto_pdb,
+        files=options.files,
         tags=tags,
         root_dir=options.root_dir,
     )
@@ -135,6 +144,7 @@ def main(args=sys.argv[1:]):
     result = runner.run()
     failed = result is None or result.steps != result.steps_passed
     raise SystemExit(int(failed))
+
 
 if __name__ == '__main__':
     main()

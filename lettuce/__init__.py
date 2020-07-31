@@ -94,7 +94,7 @@ class Runner(object):
                  enable_xunit=False, xunit_filename=None,
                  enable_subunit=False, subunit_filename=None,
                  enable_jsonreport=False, jsonreport_filename=None,
-                 tags=None, failfast=False, auto_pdb=False,
+                 tags=None, failfast=False, auto_pdb=False, files=None,
                  smtp_queue=None, root_dir=None):
 
         """ lettuce.Runner will try to find a terrain.py file and
@@ -103,8 +103,9 @@ class Runner(object):
 
         self.tags = tags
         self.single_feature = None
+        self.files = files
 
-        if os.path.isfile(base_path) and os.path.exists(base_path):
+        if os.path.isfile(base_path) and os.path.exists(base_path) and not self.files:
             self.single_feature = base_path
             base_path = os.path.dirname(base_path)
 
@@ -154,6 +155,10 @@ class Runner(object):
         results = []
         if self.single_feature:
             features_files = [self.single_feature]
+        elif self.files:
+            features_files = self.files
+            if self.random:
+                random.shuffle(features_files)
         else:
             features_files = self.loader.find_feature_files()
             if self.random:
