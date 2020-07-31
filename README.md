@@ -1,3 +1,6 @@
+This is company fork of lettuce framework. 
+Lettuce by default cannot run multiple files (by giving files path), it's needed to be done by tags. For our testing we need lettuce to accept multiple files.
+
 # lettuce
 > Version 0.2.23 - kryptonite
 
